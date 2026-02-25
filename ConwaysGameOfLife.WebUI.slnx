@@ -1,5 +1,5 @@
 <Solution>
   <Project Path="ConwaysGameOfLife.Lib/ConwaysGameOfLife.Lib.csproj" />
-  <Project Path="ConwaysGameOfLife.Test/ConwaysGameOfLife.Test.csproj" />
+  <Project Path="ConwaysGameOfLife.Test/ConwaysGameOfLife.Test.csproj" Id="49b0f1da-acd9-4230-9176-3ddb7f4adf72" />
   <Project Path="ConwaysGameOfLife.WebUI/ConwaysGameOfLife.WebUI.csproj" />
 </Solution>
