@@ -89,3 +89,18 @@ Scenario: When a dead cell has exactly three live neighbors then it becomes a li
         | O | O | . |
         | O | O | . |
         | . | . | . |
+
+## Views
+
+A board is a set of of xy tuples, and a board can be rendered to and from tuples.
+
+Scenario: A 
+    Given A board contains the following tuples
+        | x | y |
+        | O | O |
+    When This board is rendered with origin = (0,0) width = 3; height = 2,
+    Then The board state becomes
+        | 0 | 1 | 2 |
+        | O | . | . |
+        | . | . | . |
+        | . | . | . |
