@@ -19,19 +19,73 @@ The initial pattern constitutes the seed of the system. The first generation is 
 
 Each generation is a pure function of the preceding generation. The rules continue to be applied repeatedly to create further generations.
 
-## Testing
+## Core Algorithm
 
-The algorithm is thoroughly tested with Gherkin style specs that show board states such as:
-
+### Under-Population
 Scenario: When cells have zero live neighbors then they die from under-population
-	Given The board state
+    Given The board state
         | 0 | 1 | 2 |
         | . | . | . |
         | . | O | . |
         | . | . | . |
-	When The algorithm runs
-	Then The board state becomes
+    When The algorithm runs
+    Then The board state becomes
         | 0 | 1 | 2 |
         | . | . | . |
         | . | . | . |
+        | . | . | . |
+
+### Survival
+Scenario: When a live cell has two live neighbors then it lives on to the next generation
+    Given The board state
+        | 0 | 1 | 2 |
+        | O | . | . |
+        | O | O | . |
+        | . | . | . |
+    When The algorithm runs
+    Then The board state becomes
+        | 0 | 1 | 2 |
+        | O | . | . |
+        | O | O | . |
+        | . | . | . |
+
+Scenario: When a live cell has three live neighbors then it lives on to the next generation
+    Given The board state
+        | 0 | 1 | 2 |
+        | O | O | . |
+        | O | O | . |
+        | . | . | . |
+    When The algorithm runs
+    Then The board state becomes
+        | 0 | 1 | 2 |
+        | O | O | . |
+        | O | O | . |
+        | . | . | . |
+
+### Over-Population
+Scenario: When a live cell has more than three live neighbors then it dies from over-population
+    Given The board state
+        | 0 | 1 | 2 |
+        | O | O | O |
+        | O | O | . |
+        | . | . | . |
+    When The algorithm runs
+    Then The board state becomes
+        | 0 | 1 | 2 |
+        | O | . | O |
+        | O | . | O |
+        | . | . | . |
+
+### Reproduction
+Scenario: When a dead cell has exactly three live neighbors then it becomes a live cell
+    Given The board state
+        | 0 | 1 | 2 |
+        | O | O | . |
+        | O | . | . |
+        | . | . | . |
+    When The algorithm runs
+    Then The board state becomes
+        | 0 | 1 | 2 |
+        | O | O | . |
+        | O | O | . |
         | . | . | . |
