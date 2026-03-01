@@ -18,3 +18,20 @@ The initial pattern constitutes the seed of the system. The first generation is 
 ## Ticks
 
 Each generation is a pure function of the preceding generation. The rules continue to be applied repeatedly to create further generations.
+
+## Testing
+
+The algorithm is thoroughly tested with Gherkin style specs that show board states such as:
+
+Scenario: When cells have zero live neighbors then they die from under-population
+	Given The board state
+        | 0 | 1 | 2 |
+        | . | . | . |
+        | . | O | . |
+        | . | . | . |
+	When The algorithm runs
+	Then The board state becomes
+        | 0 | 1 | 2 |
+        | . | . | . |
+        | . | . | . |
+        | . | . | . |
