@@ -90,17 +90,67 @@ Scenario: When a dead cell has exactly three live neighbors then it becomes a li
         | O | O | . |
         | . | . | . |
 
-## Views
+## Other scenarios
 
-A board is a set of of xy tuples, and a board can be rendered to and from tuples.
-
-Scenario: A 
-    Given A board contains the following tuples
-        | x | y |
-        | O | O |
-    When This board is rendered with origin = (0,0) width = 3; height = 2,
+Scenario: A three-cell blinker oscillates
+    Given The board state
+        | 0 | 1 | 2 |
+        | . | O | . |
+        | . | O | . |
+        | . | O | . |
+    When The algorithm runs
     Then The board state becomes
         | 0 | 1 | 2 |
-        | O | . | . |
         | . | . | . |
+        | O | O | O |
         | . | . | . |
+    When The algorithm runs  
+    Then The board state becomes  
+        | 0 | 1 | 2 |  
+        | . | O | . |  
+        | . | O | . |  
+        | . | O | . |  
+
+## Views
+
+- A board is a set of xy tuples representing live cells in an infinite grid.  
+- Any coordinate not present in the tuple set is dead.
+- A view defines a rectangular window into the board, specified by origin, width, and height.
+- The origin is the top-left of the view. x increases to the right and y increases downward.
+
+Scenario: Two tuples will render in a view with x increasing to the right and y increasing downward
+    Given An initial board state of tuples like
+        | x | y |
+        | 0 | 0 |
+        | 1 | 1 |
+    Given the initial view is (0,0), width = 2, height = 2
+    When The board is rendered
+    Then the rendered view becomes
+        | 0 | 1 |
+        | O | . |
+        | . | O |
+
+Scenario: Zooming out reveals more of the world
+    Given An initial board state of tuples like
+        | x | y |
+        | 0 | 0 |
+        | 1 | 1 |
+    Given the initial view is (0,0), width = 3, height = 2
+    When The view is set to (0,0), width = 5, height = 4
+    Then the rendered view becomes
+        | 0 | 1 | 2 | 3 | 4 |
+        | O | . | . | . | . |
+        | . | O | . | . | . |
+        | . | . | . | . | . |
+        | . | . | . | . | . |
+
+Scenario: Pan right will move nodes out of view
+    Given An initial board state of tuples like
+        | x | y |
+        | 0 | 0 |
+        | 1 | 1 |
+    When The view is set to (-1,0), width = 3, height = 2
+    Then the rendered view becomes
+        | -1 | 0 | 1 |
+        | . | O | . |
+        | . | . | O |
