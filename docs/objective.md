@@ -22,6 +22,8 @@ Each generation is a pure function of the preceding generation. The rules contin
 ## Core Algorithm
 
 ### Under-Population
+
+```csharp
 Scenario: When cells have zero live neighbors then they die from under-population
     Given The board state
         | 0 | 1 | 2 |
@@ -34,8 +36,10 @@ Scenario: When cells have zero live neighbors then they die from under-populatio
         | . | . | . |
         | . | . | . |
         | . | . | . |
+```
 
 ### Survival
+```csharp
 Scenario: When a live cell has two live neighbors then it lives on to the next generation
     Given The board state
         | 0 | 1 | 2 |
@@ -48,7 +52,9 @@ Scenario: When a live cell has two live neighbors then it lives on to the next g
         | O | . | . |
         | O | O | . |
         | . | . | . |
+```
 
+```csharp
 Scenario: When a live cell has three live neighbors then it lives on to the next generation
     Given The board state
         | 0 | 1 | 2 |
@@ -61,8 +67,11 @@ Scenario: When a live cell has three live neighbors then it lives on to the next
         | O | O | . |
         | O | O | . |
         | . | . | . |
+```
 
 ### Over-Population
+
+```csharp
 Scenario: When a live cell has more than three live neighbors then it dies from over-population
     Given The board state
         | 0 | 1 | 2 |
@@ -75,8 +84,11 @@ Scenario: When a live cell has more than three live neighbors then it dies from 
         | O | . | O |
         | O | . | O |
         | . | . | . |
+```
 
 ### Reproduction
+
+```csharp
 Scenario: When a dead cell has exactly three live neighbors then it becomes a live cell
     Given The board state
         | 0 | 1 | 2 |
@@ -89,9 +101,11 @@ Scenario: When a dead cell has exactly three live neighbors then it becomes a li
         | O | O | . |
         | O | O | . |
         | . | . | . |
+```
 
 ## Other scenarios
 
+```csharp
 Scenario: A three-cell blinker oscillates
     Given The board state
         | 0 | 1 | 2 |
@@ -110,6 +124,7 @@ Scenario: A three-cell blinker oscillates
         | . | O | . |  
         | . | O | . |  
         | . | O | . |  
+```
 
 ## Views
 
@@ -118,6 +133,7 @@ Scenario: A three-cell blinker oscillates
 - A view defines a rectangular window into the board, specified by origin, width, and height.
 - The origin is the top-left of the view. x increases to the right and y increases downward.
 
+```csharp
 Scenario: Two tuples will render in a view with x increasing to the right and y increasing downward
     Given An initial board state of tuples like
         | x | y |
@@ -129,7 +145,9 @@ Scenario: Two tuples will render in a view with x increasing to the right and y 
         | 0 | 1 |
         | O | . |
         | . | O |
+```
 
+```csharp
 Scenario: Zooming out reveals more of the world
     Given An initial board state of tuples like
         | x | y |
@@ -143,7 +161,9 @@ Scenario: Zooming out reveals more of the world
         | . | O | . | . | . |
         | . | . | . | . | . |
         | . | . | . | . | . |
+```
 
+```csharp
 Scenario: Pan right will move nodes out of view
     Given An initial board state of tuples like
         | x | y |
@@ -154,6 +174,7 @@ Scenario: Pan right will move nodes out of view
         | -1 | 0 | 1 |
         | . | O | . |
         | . | . | O |
+```
 
 ## Pre-loaded shapes
 
@@ -161,6 +182,7 @@ User can load the following shapes.
 
 ### I-heptomino
 
+```csharp
 Scenario: User loads the "I-heptomino" pattern
     When The user loads the "I-heptomino" pattern
     Then The board state becomes
@@ -179,9 +201,11 @@ Scenario: User loads the "I-heptomino" pattern
         | . | O | . | . |
         | . | O | O | . |
         | . | . | O | O |
+```
 
 ### Gosper's glider gun
 
+```csharp
 Scenario: User loads the "Gosper's glider gun" pattern
     When The user loads the "Gosper's glider gun" pattern
     Then The board state becomes
@@ -234,3 +258,4 @@ Scenario: User loads the "Gosper's glider gun" pattern
         | . | . | . | . | . | . | . | . | . | . | O  | .  | .  | .  | .  | .  | O  | .  | .  | .  | .  | .  | .  | .  | O  | .  | .  | .  | .  | .  | .  | .  | .  | .  | .  | .  |
         | . | . | . | . | . | . | . | . | . | . | .  | O  | .  | .  | .  | O  | .  | .  | .  | .  | .  | .  | .  | .  | .  | .  | .  | .  | .  | .  | .  | .  | .  | .  | .  | .  |
         | . | . | . | . | . | . | . | . | . | . | .  | .  | O  | O  | .  | .  | .  | .  | .  | .  | .  | .  | .  | .  | .  | .  | .  | .  | .  | .  | .  | .  | .  | .  | .  | .  |
+```
