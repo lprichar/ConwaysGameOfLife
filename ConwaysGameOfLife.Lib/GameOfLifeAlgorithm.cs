@@ -2,33 +2,50 @@ namespace ConwaysGameOfLife.Lib;
 
 public static class GameOfLifeAlgorithm
 {
-    public static string[] NextGeneration(string[] board)
+    public static HashSet<(int x, int y)> NextGeneration(IEnumerable<(int x, int y)> liveCells)
     {
-        var height = board.Length;
-        var width = board[0].Length;
-        var next = new string[height];
+        var liveCellSet = liveCells.ToHashSet();
+        var candidateCells = new HashSet<(int x, int y)>();
 
-        for (var y = 0; y < height; y++)
+        foreach (var cell in liveCellSet)
         {
-            var row = new char[width];
-
-            for (var x = 0; x < width; x++)
-            {
-                var liveNeighbors = CountLiveNeighbors(board, x, y, width, height);
-                var isAlive = board[y][x] == 'O';
-
-                row[x] = isAlive
-                    ? (liveNeighbors is 2 or 3 ? 'O' : '.')
-                    : (liveNeighbors == 3 ? 'O' : '.');
-            }
-
-            next[y] = new string(row);
+            candidateCells.Add(cell);
+            AddNeighbors(candidateCells, cell.x, cell.y);
         }
 
-        return next;
+        var nextGeneration = new HashSet<(int x, int y)>();
+
+        foreach (var (x, y) in candidateCells)
+        {
+            var liveNeighbors = CountLiveNeighbors(liveCellSet, x, y);
+            var isAlive = liveCellSet.Contains((x, y));
+
+            if ((isAlive && (liveNeighbors == 2 || liveNeighbors == 3)) || (!isAlive && liveNeighbors == 3))
+            {
+                nextGeneration.Add((x, y));
+            }
+        }
+
+        return nextGeneration;
     }
 
-    private static int CountLiveNeighbors(string[] board, int x, int y, int width, int height)
+    private static void AddNeighbors(HashSet<(int x, int y)> candidateCells, int x, int y)
+    {
+        for (var dy = -1; dy <= 1; dy++)
+        {
+            for (var dx = -1; dx <= 1; dx++)
+            {
+                if (dx == 0 && dy == 0)
+                {
+                    continue;
+                }
+
+                candidateCells.Add((x + dx, y + dy));
+            }
+        }
+    }
+
+    private static int CountLiveNeighbors(HashSet<(int x, int y)> liveCells, int x, int y)
     {
         var liveNeighbors = 0;
 
@@ -41,15 +58,7 @@ public static class GameOfLifeAlgorithm
                     continue;
                 }
 
-                var nx = x + dx;
-                var ny = y + dy;
-
-                if (nx < 0 || ny < 0 || nx >= width || ny >= height)
-                {
-                    continue;
-                }
-
-                if (board[ny][nx] == 'O')
+                if (liveCells.Contains((x + dx, y + dy)))
                 {
                     liveNeighbors++;
                 }
