@@ -2,17 +2,18 @@
 
 public partial class Index
 {
-    private static int NumberOne => 40;
-    private static int NumberTwo => 2;
-    private int Sum { get; set; }
+    private const int ViewWidth = 20;
+    private const int ViewHeight = 20;
+    private const string CellSizePx = "18px";
 
-    protected override void OnInitialized()
-    {
-        var calculator = new Lib.Demo.Calculator();
-        calculator.SetFirstNumber(NumberOne);
-        calculator.SetSecondNumber(NumberTwo);
-        Sum = calculator.Add();
+    // Minimal seeded pattern (a blinker) so the grid renders with some live cells.
+    // Coordinates here are view-local (0..ViewWidth-1, 0..ViewHeight-1).
+    private readonly HashSet<(int x, int y)> _liveCells =
+    [
+        (9, 8),
+        (9, 9),
+        (9, 10),
+    ];
 
-        base.OnInitialized();
-    }
+    private bool IsAlive(int x, int y) => _liveCells.Contains((x, y));
 }

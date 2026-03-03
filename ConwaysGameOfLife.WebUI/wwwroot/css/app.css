@@ -30,3 +30,22 @@ h1:focus {
     .blazor-error-boundary::after {
         content: "An error has occurred."
     }
+
+.life-grid {
+    display: grid;
+    grid-template-columns: repeat(var(--life-cols), var(--life-cell-size));
+    gap: 1px;
+    background: GrayText;
+    padding: 1px;
+    width: fit-content;
+}
+
+.life-cell {
+    width: var(--life-cell-size);
+    height: var(--life-cell-size);
+    background: Canvas;
+}
+
+.life-cell.is-alive {
+    background: CanvasText;
+}

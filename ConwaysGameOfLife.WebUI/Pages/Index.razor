@@ -1,11 +1,25 @@
 ﻿@page "/"
 
-<h1>Hello, world!</h1>
+<PageTitle>Conway's Game of Life</PageTitle>
 
-<p>
-    <span>@NumberOne</span>
-    <span> </span>
-    <span>@NumberOne</span>
-    <span> = </span>
-    <span>@Sum</span>
-</p>
+<h1>Conway's Game of Life</h1>
+
+<div
+    class="life-grid"
+    role="grid"
+    aria-label="Game of Life grid"
+    style="--life-cols:@ViewWidth; --life-cell-size:@CellSizePx">
+    @for (var y = 0; y < ViewHeight; y++)
+    {
+        @for (var x = 0; x < ViewWidth; x++)
+        {
+            var isAlive = IsAlive(x, y);
+
+            <div
+                class="life-cell @(isAlive ? "is-alive" : "is-dead")"
+                role="gridcell"
+                aria-label="Cell @x,@y: @(isAlive ? "alive" : "dead")">
+            </div>
+        }
+    }
+</div>
