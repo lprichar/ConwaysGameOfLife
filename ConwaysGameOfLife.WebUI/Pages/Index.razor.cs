@@ -1,4 +1,6 @@
-﻿namespace ConwaysGameOfLife.WebUI.Pages;
+﻿using ConwaysGameOfLife.Lib;
+
+namespace ConwaysGameOfLife.WebUI.Pages;
 
 public partial class Index
 {
@@ -8,12 +10,14 @@ public partial class Index
 
     // Minimal seeded pattern (a blinker) so the grid renders with some live cells.
     // Coordinates here are view-local (0..ViewWidth-1, 0..ViewHeight-1).
-    private readonly HashSet<(int x, int y)> _liveCells =
-    [
-        (9, 8),
-        (9, 9),
-        (9, 10),
-    ];
+    private HashSet<(int x, int y)> _liveCells =
+        [
+            (9, 8),
+            (9, 9),
+            (9, 10),
+        ];
+
+    private void Next() => _liveCells = GameOfLifeAlgorithm.NextGeneration(_liveCells);
 
     private bool IsAlive(int x, int y) => _liveCells.Contains((x, y));
 }
