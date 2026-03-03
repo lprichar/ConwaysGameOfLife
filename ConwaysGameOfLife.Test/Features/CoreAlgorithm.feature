@@ -24,7 +24,7 @@ Scenario: When a live cell has two live neighbors then it lives on to the next g
     When The algorithm runs
     Then The board state becomes
         | 0 | 1 | 2 |
-        | O | . | . |
+        | O | O | . |
         | O | O | . |
         | . | . | . |
 

@@ -1,3 +1,4 @@
+using ConwaysGameOfLife.Lib;
 using Xunit;
 
 namespace ConwaysGameOfLife.Test.StepDefinitions;
@@ -17,7 +18,7 @@ public sealed class CoreAlgorithmStepDefinitions
     [When("The algorithm runs")]
     public void WhenTheAlgorithmRuns()
     {
-        _nextBoard = [.. _board];
+        _nextBoard = GameOfLifeAlgorithm.NextGeneration(_board);
     }
 
     [Then("The board state becomes")]
