@@ -1,4 +1,5 @@
 ﻿using ConwaysGameOfLife.Lib;
+using ConwaysGameOfLife.Lib.View;
 
 namespace ConwaysGameOfLife.WebUI.Pages;
 
@@ -7,9 +8,14 @@ public partial class Index
     private const int ViewWidth = 20;
     private const int ViewHeight = 20;
     private const string CellSizePx = "18px";
+    private const string AliveCell = "O";
+
+    private int _originX;
+    private int _originY;
+    private string[][] _renderedView = [];
 
     // Minimal seeded pattern (a blinker) so the grid renders with some live cells.
-    // Coordinates here are view-local (0..ViewWidth-1, 0..ViewHeight-1).
+    // Coordinates here are world coordinates.
     private HashSet<(int x, int y)> _liveCells =
         [
             (9, 8),
@@ -17,7 +23,39 @@ public partial class Index
             (9, 10),
         ];
 
-    private void Next() => _liveCells = GameOfLifeAlgorithm.NextGeneration(_liveCells);
+    protected override void OnInitialized() => RenderView();
 
-    private bool IsAlive(int x, int y) => _liveCells.Contains((x, y));
+    private void Next()
+    {
+        _liveCells = GameOfLifeAlgorithm.NextGeneration(_liveCells);
+        RenderView();
+    }
+
+    private void PanLeft()
+    {
+        _originX -= 1;
+        RenderView();
+    }
+
+    private void PanRight()
+    {
+        _originX += 1;
+        RenderView();
+    }
+
+    private void PanUp()
+    {
+        _originY -= 1;
+        RenderView();
+    }
+
+    private void PanDown()
+    {
+        _originY += 1;
+        RenderView();
+    }
+
+    private void RenderView() => _renderedView = BoardViewRenderer.Render(_liveCells, _originX, _originY, ViewWidth, ViewHeight);
+
+    private bool IsAliveInView(int x, int y) => _renderedView[y][x] == AliveCell;
 }

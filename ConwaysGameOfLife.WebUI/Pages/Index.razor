@@ -13,15 +13,21 @@
     {
         @for (var x = 0; x < ViewWidth; x++)
         {
-            var isAlive = IsAlive(x, y);
+            var isAlive = IsAliveInView(x, y);
+            var worldX = _originX + x;
+            var worldY = _originY + y;
 
             <div
                 class="life-cell @(isAlive ? "is-alive" : "is-dead")"
                 role="gridcell"
-                aria-label="Cell @x,@y: @(isAlive ? "alive" : "dead")">
+                aria-label="Cell @worldX,@worldY: @(isAlive ? "alive" : "dead")">
             </div>
         }
     }
 </div>
 
+<button type="button" @onclick="PanLeft">Left</button>
+<button type="button" @onclick="PanRight">Right</button>
+<button type="button" @onclick="PanUp">Up</button>
+<button type="button" @onclick="PanDown">Down</button>
 <button type="button" @onclick="Next">Next</button>
