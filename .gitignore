@@ -349,3 +349,5 @@ healthchecksdb
 MigrationBackup/
 
 ConwaysGameOfLife.WebUI.v3.ncrunchsolution
+
+ConwaysGameOfLife.Test/Features/CoreAlgorithm.feature.cs
