@@ -22,6 +22,11 @@
 
 ## Key Files & Directories
 - `docs/objective.md`: Project spec, rules, and scenarios
+- `docs/back-end-best-practices.md`: Backend and domain guidance
+- `docs/front-end-best-practices.md`: Blazor UI guidance
+- `docs/testing-best-practices.md`: Test and scenario guidance
+- `docs/testing-checklist.md`: Final test review checklist
+- `docs/filter-examples.md`: Lightweight board and view examples
 - `ConwaysGameOfLife.Lib/`: Core board logic and pure functions
 - `ConwaysGameOfLife.WebUI/`: Blazor Web UI
 - `ConwaysGameOfLife.Test/Features/`: BDD scenarios
