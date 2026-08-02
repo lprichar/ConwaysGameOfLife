@@ -17,7 +17,7 @@ public sealed record Board
 
     private readonly FrozenSet<CellCoordinate> _liveCellLookup;
 
-    public IList<CellCoordinate> LiveCells { get; }
+    public IReadOnlyList<CellCoordinate> LiveCells { get; }
 
     public bool IsAlive(CellCoordinate coordinate) => _liveCellLookup.Contains(coordinate);
 }
