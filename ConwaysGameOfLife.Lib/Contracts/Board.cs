@@ -1,4 +1,5 @@
 using System.Collections.Frozen;
+using System.Collections.ObjectModel;
 
 namespace ConwaysGameOfLife.Lib.Contracts;
 
@@ -9,10 +10,14 @@ public sealed record Board
     public Board(IEnumerable<CellCoordinate> liveCells)
     {
         ArgumentNullException.ThrowIfNull(liveCells);
-        LiveCells = liveCells.ToFrozenSet();
+        var uniqueCells = liveCells.Distinct().ToList();
+        LiveCells = new ReadOnlyCollection<CellCoordinate>(uniqueCells);
+        _liveCellLookup = uniqueCells.ToFrozenSet();
     }
 
-    public FrozenSet<CellCoordinate> LiveCells { get; }
+    private readonly FrozenSet<CellCoordinate> _liveCellLookup;
 
-    public bool IsAlive(CellCoordinate coordinate) => LiveCells.Contains(coordinate);
+    public IList<CellCoordinate> LiveCells { get; }
+
+    public bool IsAlive(CellCoordinate coordinate) => _liveCellLookup.Contains(coordinate);
 }
