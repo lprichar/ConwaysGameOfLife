@@ -1,17 +1,21 @@
-﻿namespace ConwaysGameOfLife.WebUI.Pages;
+﻿using ConwaysGameOfLife.Lib.Contracts;
+using ConwaysGameOfLife.Lib.Services;
+using Microsoft.AspNetCore.Components;
+
+namespace ConwaysGameOfLife.WebUI.Pages;
 
 public partial class Index
 {
-    private static int NumberOne => 40;
-    private static int NumberTwo => 2;
-    private int Sum { get; set; }
+    [Inject]
+    private IGameOfLifeService GameOfLifeService { get; set; } = default!;
+
+    private RenderedBoard? RenderedBoard { get; set; }
 
     protected override void OnInitialized()
     {
-        var calculator = new Lib.Demo.Calculator();
-        calculator.SetFirstNumber(NumberOne);
-        calculator.SetSecondNumber(NumberTwo);
-        Sum = calculator.Add();
+        var board = GameOfLifeService.LoadShape("I-heptomino");
+        var view = new BoardView(0, 0, 6, 4);
+        RenderedBoard = GameOfLifeService.Render(board, view);
 
         base.OnInitialized();
     }

@@ -17,7 +17,7 @@ namespace ConwaysGameOfLife.Test.Features
     
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Reqnroll", "3.0.0.0")]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public partial class CalculatorFeature : object, Xunit.IClassFixture<CalculatorFeature.FixtureData>, Xunit.IAsyncLifetime
+    public partial class GameOfLifeServiceContractFeature : object, Xunit.IClassFixture<GameOfLifeServiceContractFeature.FixtureData>, Xunit.IAsyncLifetime
     {
         
         private global::Reqnroll.ITestRunner testRunner;
@@ -26,12 +26,12 @@ namespace ConwaysGameOfLife.Test.Features
         
         private static string[] featureTags = ((string[])(null));
         
-        private static global::Reqnroll.FeatureInfo featureInfo = new global::Reqnroll.FeatureInfo(new global::System.Globalization.CultureInfo("en-US"), "Features", "Calculator", "Simple calculator for adding two numbers", global::Reqnroll.ProgrammingLanguage.CSharp, featureTags, InitializeCucumberMessages());
+        private static global::Reqnroll.FeatureInfo featureInfo = new global::Reqnroll.FeatureInfo(new global::System.Globalization.CultureInfo("en-US"), "Features", "Game of Life service contract", "Phase 0 contract-level checks for API stability and baseline determinism", global::Reqnroll.ProgrammingLanguage.CSharp, featureTags, InitializeCucumberMessages());
         
 #line 1 "Calculator.feature"
 #line hidden
         
-        public CalculatorFeature(CalculatorFeature.FixtureData fixtureData, Xunit.ITestOutputHelper testOutputHelper)
+        public GameOfLifeServiceContractFeature(GameOfLifeServiceContractFeature.FixtureData fixtureData, Xunit.ITestOutputHelper testOutputHelper)
         {
             this._testOutputHelper = testOutputHelper;
         }
@@ -105,7 +105,7 @@ namespace ConwaysGameOfLife.Test.Features
         
         private static global::Reqnroll.Formatters.RuntimeSupport.FeatureLevelCucumberMessages InitializeCucumberMessages()
         {
-            return new global::Reqnroll.Formatters.RuntimeSupport.FeatureLevelCucumberMessages("Features/Calculator.feature.ndjson", 3);
+            return new global::Reqnroll.Formatters.RuntimeSupport.FeatureLevelCucumberMessages("Features/Calculator.feature.ndjson", 5);
         }
         
         async System.Threading.Tasks.ValueTask Xunit.IAsyncLifetime.InitializeAsync()
@@ -133,20 +133,18 @@ namespace ConwaysGameOfLife.Test.Features
             await this.TestTearDownAsync();
         }
         
-        [global::Xunit.FactAttribute(DisplayName="Add two numbers")]
-        [global::Xunit.TraitAttribute("FeatureTitle", "Calculator")]
-        [global::Xunit.TraitAttribute("Description", "Add two numbers")]
-        [global::Xunit.TraitAttribute("Category", "mytag")]
-        public async global::System.Threading.Tasks.Task AddTwoNumbers()
+        [global::Xunit.FactAttribute(DisplayName="Create and render an empty board")]
+        [global::Xunit.TraitAttribute("FeatureTitle", "Game of Life service contract")]
+        [global::Xunit.TraitAttribute("Description", "Create and render an empty board")]
+        public async global::System.Threading.Tasks.Task CreateAndRenderAnEmptyBoard()
         {
-            string[] tagsOfScenario = new string[] {
-                    "mytag"};
+            string[] tagsOfScenario = ((string[])(null));
             global::System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new global::System.Collections.Specialized.OrderedDictionary();
             string pickleIndex = "0";
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Add two numbers", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Create and render an empty board", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
             string[] tagsOfRule = ((string[])(null));
             global::Reqnroll.RuleInfo ruleInfo = null;
-#line 6
+#line 5
 this.ScenarioInitialize(scenarioInfo, ruleInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -156,17 +154,91 @@ this.ScenarioInitialize(scenarioInfo, ruleInfo);
             else
             {
                 await this.ScenarioStartAsync();
+#line 6
+    await testRunner.GivenAsync("a baseline game of life service", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line hidden
 #line 7
- await testRunner.GivenAsync("the first number is 50", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+    await testRunner.WhenAsync("an empty board is created", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 8
- await testRunner.AndAsync("the second number is 70", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+    await testRunner.AndAsync("the board is rendered at origin 0,0 with width 3 and height 2", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 9
- await testRunner.WhenAsync("the two numbers are added", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+    await testRunner.ThenAsync("the rendered board has 2 rows and each row has 3 cells", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
 #line 10
- await testRunner.ThenAsync("the result should be 120", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+    await testRunner.AndAsync("all rendered cells are dead", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [global::Xunit.FactAttribute(DisplayName="Loading a shape is deterministic")]
+        [global::Xunit.TraitAttribute("FeatureTitle", "Game of Life service contract")]
+        [global::Xunit.TraitAttribute("Description", "Loading a shape is deterministic")]
+        public async global::System.Threading.Tasks.Task LoadingAShapeIsDeterministic()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            global::System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new global::System.Collections.Specialized.OrderedDictionary();
+            string pickleIndex = "1";
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Loading a shape is deterministic", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
+            string[] tagsOfRule = ((string[])(null));
+            global::Reqnroll.RuleInfo ruleInfo = null;
+#line 12
+this.ScenarioInitialize(scenarioInfo, ruleInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                await testRunner.SkipScenarioAsync();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 13
+    await testRunner.GivenAsync("a baseline game of life service", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line hidden
+#line 14
+    await testRunner.WhenAsync("the shape \"I-heptomino\" is loaded twice", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 15
+    await testRunner.ThenAsync("both loaded boards have the same live-cell set", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [global::Xunit.FactAttribute(DisplayName="Next generation is deterministic and structurally valid")]
+        [global::Xunit.TraitAttribute("FeatureTitle", "Game of Life service contract")]
+        [global::Xunit.TraitAttribute("Description", "Next generation is deterministic and structurally valid")]
+        public async global::System.Threading.Tasks.Task NextGenerationIsDeterministicAndStructurallyValid()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            global::System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new global::System.Collections.Specialized.OrderedDictionary();
+            string pickleIndex = "2";
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Next generation is deterministic and structurally valid", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
+            string[] tagsOfRule = ((string[])(null));
+            global::Reqnroll.RuleInfo ruleInfo = null;
+#line 17
+this.ScenarioInitialize(scenarioInfo, ruleInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                await testRunner.SkipScenarioAsync();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 18
+    await testRunner.GivenAsync("a baseline game of life service", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line hidden
+#line 19
+    await testRunner.AndAsync("the shape \"I-heptomino\" is loaded as the current board", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 20
+    await testRunner.WhenAsync("next generation is computed twice from the current board", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 21
+    await testRunner.ThenAsync("both next-generation boards have the same live-cell set", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();
@@ -179,12 +251,12 @@ this.ScenarioInitialize(scenarioInfo, ruleInfo);
             
             async System.Threading.Tasks.ValueTask Xunit.IAsyncLifetime.InitializeAsync()
             {
-                await CalculatorFeature.FeatureSetupAsync();
+                await GameOfLifeServiceContractFeature.FeatureSetupAsync();
             }
             
             async System.Threading.Tasks.ValueTask System.IAsyncDisposable.DisposeAsync()
             {
-                await CalculatorFeature.FeatureTearDownAsync();
+                await GameOfLifeServiceContractFeature.FeatureTearDownAsync();
             }
         }
     }
